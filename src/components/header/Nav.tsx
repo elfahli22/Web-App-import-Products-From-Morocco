@@ -2,14 +2,19 @@
 'use client'
 import Link from 'next/link';
 import { Button } from '../ui/button'; // Assuming shadcn/ui provides a Button component
-import { Menu, X } from 'lucide-react'; // Icons for mobile menu
+import { Menu, X, ChevronDown } from 'lucide-react'; // Icons for mobile menu and dropdown
 import { useState } from 'react';
 
 export default function Navbar() {
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(false); // For mobile menu
+  const [isProductsDropdownOpen, setIsProductsDropdownOpen] = useState(false); // For products dropdown
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
+  };
+
+  const toggleProductsDropdown = () => {
+    setIsProductsDropdownOpen(!isProductsDropdownOpen);
   };
 
   return (
@@ -32,11 +37,49 @@ export default function Navbar() {
                 Home
               </span>
             </Link>
-            <Link href="/products">
-              <span className="text-[#F3F4F6] hover:text-[#D97706] px-3 py-2 rounded-md text-sm font-medium cursor-pointer">
+
+            {/* Products Dropdown */}
+            <div className="relative">
+              <button
+                onClick={toggleProductsDropdown}
+                className="text-[#F3F4F6] hover:text-[#D97706] px-3 py-2 rounded-md text-sm font-medium flex items-center focus:outline-none"
+              >
                 Products
-              </span>
-            </Link>
+                <ChevronDown
+                  size={16}
+                  className={`ml-1 transition-transform ${
+                    isProductsDropdownOpen ? 'rotate-180' : ''
+                  }`}
+                />
+              </button>
+
+              {/* Dropdown Menu */}
+              {isProductsDropdownOpen && (
+                <div className="absolute mt-2 w-48 bg-white rounded-md shadow-lg">
+                  <Link href="/products/olive-oil">
+                    <span className="block px-4 py-2 text-sm text-[#1F2937] hover:bg-[#F3F4F6] cursor-pointer">
+                      Olive Oil
+                    </span>
+                  </Link>
+                  <Link href="/products/argan-oil">
+                    <span className="block px-4 py-2 text-sm text-[#1F2937] hover:bg-[#F3F4F6] cursor-pointer">
+                      Argan Oil
+                    </span>
+                  </Link>
+                  <Link href="/products/dates">
+                    <span className="block px-4 py-2 text-sm text-[#1F2937] hover:bg-[#F3F4F6] cursor-pointer">
+                      Dates
+                    </span>
+                  </Link>
+                  <Link href="/products/handicrafts">
+                    <span className="block px-4 py-2 text-sm text-[#1F2937] hover:bg-[#F3F4F6] cursor-pointer">
+                      Handicrafts
+                    </span>
+                  </Link>
+                </div>
+              )}
+            </div>
+
             <Link href="/about">
               <span className="text-[#F3F4F6] hover:text-[#D97706] px-3 py-2 rounded-md text-sm font-medium cursor-pointer">
                 About Us
@@ -73,11 +116,49 @@ export default function Navbar() {
                 Home
               </span>
             </Link>
-            <Link href="/products">
-              <span className="block text-[#F3F4F6] hover:text-[#D97706] px-3 py-2 rounded-md text-base font-medium cursor-pointer">
+
+            {/* Mobile Products Dropdown */}
+            <div className="relative">
+              <button
+                onClick={toggleProductsDropdown}
+                className="w-full text-left text-[#F3F4F6] hover:text-[#D97706] px-3 py-2 rounded-md text-base font-medium flex items-center justify-between focus:outline-none"
+              >
                 Products
-              </span>
-            </Link>
+                <ChevronDown
+                  size={16}
+                  className={`ml-1 transition-transform ${
+                    isProductsDropdownOpen ? 'rotate-180' : ''
+                  }`}
+                />
+              </button>
+
+              {/* Mobile Dropdown Menu */}
+              {isProductsDropdownOpen && (
+                <div className="pl-4">
+                  <Link href="/products/olive-oil">
+                    <span className="block px-3 py-2 text-sm text-[#F3F4F6] hover:text-[#D97706] cursor-pointer">
+                      Olive Oil
+                    </span>
+                  </Link>
+                  <Link href="/products/argan-oil">
+                    <span className="block px-3 py-2 text-sm text-[#F3F4F6] hover:text-[#D97706] cursor-pointer">
+                      Argan Oil
+                    </span>
+                  </Link>
+                  <Link href="/products/dates">
+                    <span className="block px-3 py-2 text-sm text-[#F3F4F6] hover:text-[#D97706] cursor-pointer">
+                      Dates
+                    </span>
+                  </Link>
+                  <Link href="/products/handicrafts">
+                    <span className="block px-3 py-2 text-sm text-[#F3F4F6] hover:text-[#D97706] cursor-pointer">
+                      Handicrafts
+                    </span>
+                  </Link>
+                </div>
+              )}
+            </div>
+
             <Link href="/about">
               <span className="block text-[#F3F4F6] hover:text-[#D97706] px-3 py-2 rounded-md text-base font-medium cursor-pointer">
                 About Us
